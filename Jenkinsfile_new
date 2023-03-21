@@ -32,7 +32,7 @@ pipeline {
     }
     post {
   success {
-    echo "job is succes, send success mail"
+    echo "job is success, send success mail"
   }
   failure {
     echo "job is failed, dend failure message"
