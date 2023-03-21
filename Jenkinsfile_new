@@ -5,7 +5,7 @@ pipeline {
   TOMCAT_DEV_NAME = "ec2-user"
  }
  parameters {
-  string defaultValue: 'main', description: 'choose the branch to deploy', name: 'branch name'
+  string defaultValue: 'master', description: 'choose the branch to deploy', name: 'branch name'
 }
 
     stages {
