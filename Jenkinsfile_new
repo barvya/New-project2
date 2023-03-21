@@ -10,11 +10,21 @@ pipeline {
 
     stages {
         stage('git checkout') {
+           when {
+              expression{
+                     param.name == "develop"
+              }
+           }
             steps {
                 git branch: "${params.branchname}", credentialsId: 'github', url: 'https://github.com/barvya/New-project2.git'
             }
         }
         stage('maven'){
+              when {
+              expression{
+                     param.name == "develop"
+              }
+           }
             steps{
                 sh 'mvn clean package'
             }
