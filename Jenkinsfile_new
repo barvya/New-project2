@@ -29,7 +29,12 @@ pipeline {
                 sh 'mvn clean package'
             }
         }
-        stage('deploy'){
+        stage('deploy'){ 
+           when {
+              expression{
+                     params.name == "develop"
+              }
+           }
             steps{
                 sshagent(['tomcat-server']) {
                  // some block
