@@ -4,11 +4,14 @@ pipeline {
   TOMCAT_DEV_ID = "13.231.119.153"
   TOMCAT_DEV_NAME = "ec2-user"
  }
+ parameters {
+ string defaultvalue: 'master', description: 'choose the branch to deploy', name: 'branchname'
+ }
 
     stages {
         stage('git checkout') {
             steps {
-                git branch: 'master', credentialsId: 'github', url: 'https://github.com/barvya/New-project2.git'
+                git branch: "${params.branchname}", credentialsId: 'github', url: 'https://github.com/barvya/New-project2.git'
             }
         }
         stage('maven'){
