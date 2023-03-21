@@ -1,5 +1,10 @@
 pipeline {
     agent any
+    environment {
+  TOMCAT_DEV_ID = "35.78.209.122"
+  TOMCAT_DEV_NAME = "ec2-user"
+ }
+
 
     stages {
         stage('git checkout') {
@@ -16,9 +21,9 @@ pipeline {
             steps{
                 sshagent(['tomcat-server']) {
                  // some block
-                 sh "scp -o StrictHostKeyChecking=no target/*.war ec2-user@35.78.209.122:/opt/tomcat9/webapps/"
-                 sh 'ssh ec2-user@35.78.209.122 /opt/tomcat9/bin/shutdown.sh'
-                 sh 'ssh ec2-user@35.78.209.122 /opt/tomcat9/bin/startup.sh'
+                 sh "scp -o StrictHostKeyChecking=no target/*.war $TOMCAT_DEV_NAME@$TOMCAT_DEV_ID:/opt/tomcat9/webapps/"
+                 sh 'ssh $TOMCAT_DEV_NAME@$TOMCAT_DEV_ID /opt/tomcat9/bin/shutdown.sh'
+                 sh 'ssh $TOMCAT_DEV_NAME@$TOMCAT_DEV_ID /opt/tomcat9/bin/startup.sh'
               }
             }
         }
