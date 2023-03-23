@@ -40,7 +40,7 @@ pipeline {
     echo "job is success, send success mail"
   }
   failure {
-    echo "job is failed, dend failure message"
+    echo "job is failed, send failure message"
   }
 }
 }
