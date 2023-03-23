@@ -20,21 +20,11 @@ pipeline {
             }
         }
         stage('maven'){
-              when {
-              expression{
-                     params.name == "develop"
-              }
-           }
             steps{
                 sh 'mvn clean package'
             }
         }
         stage('deploy'){ 
-           when {
-              expression{
-                     params.name == "develop"
-              }
-           }
             steps{
                 sshagent(['tomcat-server']) {
                  // some block
