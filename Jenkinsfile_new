@@ -15,11 +15,7 @@ pipeline {
             }
         }
         stage('maven'){
-        when {
-              expression{
-                     params.name == "hari"
-              }
-           }
+        //when {expression{ params.name == "hari" }}
             steps{
                 sh 'mvn clean package'
             }
