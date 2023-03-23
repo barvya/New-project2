@@ -37,7 +37,7 @@ pipeline {
     }
     post {
   success {
-    echo "job is success, send success mail"
+    echo "job is success, send success mail everything look likes good"
   }
   failure {
     echo "job is failed, send failure message"
