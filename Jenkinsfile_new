@@ -17,7 +17,7 @@ pipeline {
         stage('maven'){
         when {
               expression{
-                     params.name == "develop"
+                     params.name == "hari"
               }
            }
             steps{
