@@ -1,0 +1,46 @@
+pipeline {
+    agent any
+    environment {
+  TOMCAT_DEV_ID = "35.78.177.233"
+  TOMCAT_DEV_NAME = "ec2-user"
+ }
+ parameters {
+  string defaultValue: 'master', description: 'choose the brach to deploy', name: 'branchname'
+}
+
+    stages {
+        stage('git checkout') {
+        when {
+        branch 'dev'
+        }
+            steps {
+                git branch: "${params.branchname}", credentialsId: 'github', url: 'https://github.com/barvya/New-project2.git'
+            }
+        }
+        stage('maven'){
+      when {
+      branch 'devlop'
+            steps{
+                sh 'mvn clean package'
+            }
+        }
+        stage('deploy'){ 
+            steps{
+                sshagent(['tomcat-server']) {
+                 // some block
+                 sh "scp -o StrictHostKeyChecking=no target/*.war $TOMCAT_DEV_NAME@$TOMCAT_DEV_ID:/opt/tomcat9/webapps/"
+                 sh 'ssh $TOMCAT_DEV_NAME@$TOMCAT_DEV_ID /opt/tomcat9/bin/shutdown.sh'
+                 sh 'ssh $TOMCAT_DEV_NAME@$TOMCAT_DEV_ID /opt/tomcat9/bin/startup.sh'
+              }
+            }
+        }
+    }
+    post {
+  success {
+    echo "job is success, send success mail everything look likes good"
+  }
+  failure {
+    echo "job is failed, send failure message"
+  }
+}
+}
